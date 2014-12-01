@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Adventure Game</title>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/sockjs.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.terminal-0.8.8.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.terminal.css') }}" />
+    <script type="text/javascript">
+    $(function() {
+        var socket = null;
+        terminal = $('.terminal').terminal(function(command, term) {
+            if(socket.readyState == 1) socket.send(command);
+        }, { prompt: '', greetings: false });
+        var socket = new SockJS('/game_');
+        socket.onopen = function(event) {
+            socket.send('{{game_id}}');
+        }
+        socket.onmessage = function(event) {
+            terminal.echo(event.data);
+        };
+        socket.onclose = function(event) {
+            terminal.echo('Connection lost!');
+        }
+     });
+    </script>
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h1>Adventure Game Compilation</h1>
+        <div><a class="btn btn-primary" id="new-game" href="/"><i class="glyphicon glyphicon-refresh"></i> New Game</a></div>
+        <div class="terminal" style="width: 700px; height: 450px; margin: 15 auto; text-align: left;"></div>
+        <div>Game ID: {{ game_id }}</div>
+        <div>compiled by <a href="https://github.com/patins">@patins</a></div>
+    </div>
+</body>
+</html>
