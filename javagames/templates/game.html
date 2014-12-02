@@ -30,7 +30,10 @@
 <body>
     <div class="container" style="text-align: center;">
         <h1>Adventure Game Compilation</h1>
-        <div><a class="btn btn-primary" id="new-game" href="/"><i class="glyphicon glyphicon-refresh"></i> New Game</a></div>
+        <div>
+            <a class="btn btn-primary" id="refresh-game" href="/game/{{ game_id }}"><i class="glyphicon glyphicon-repeat"></i> Restart Game</a>
+            <a class="btn btn-warning" id="new-game" href="/"><i class="glyphicon glyphicon-fast-forward"></i> Play A New Game</a>
+        </div>
         <div class="terminal" style="width: 700px; height: 450px; margin: 15 auto; text-align: left;"></div>
         <div>Game ID: {{ game_id }}</div>
         <div>compiled by <a href="https://github.com/patins">@patins</a></div>
